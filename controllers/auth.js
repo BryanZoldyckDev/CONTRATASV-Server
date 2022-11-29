@@ -11,7 +11,7 @@ const login = async(req, res = response) => {
 
     try {
         //Verificar si el correo existe
-        const user = await User.findOne({email});
+        const user = await User.findOne({email}).populate({path: 'role', select: 'name -_id'});
 
 
         if (!user){
@@ -35,12 +35,9 @@ const login = async(req, res = response) => {
 
         //Generar el JWT
         const token = await generateJWT(user.id);
-
-        const {name} = await Role.findById({_id: user.role});
         
         res.json({
             user,
-            role: name,
             token
         })
     } catch (error) {
