@@ -52,6 +52,14 @@ const getUsers = async(req = request, res = response) => {
     })
 }
 
+const getProfile = async(req = request, res = response) => {
+    const idLoggedUser = req.user._id;
+
+    const profile = await User.findById(idLoggedUser).populate({path: 'role', select: 'name -_id'}).populate({path: 'profession', select: 'name -_id'});
+
+    res.status(200).json(profile)
+}
+
 const postUsers = async(req, res = response) => {
     
     const {password, role, dui, birthdate, profession, phone, ...body} = req.body;
@@ -278,6 +286,7 @@ const putProfile = async(req = request, res = response) => {
 
 module.exports = {
     getUsers,
+    getProfile,
     postUsers,
     putUsers,
     putProfile,

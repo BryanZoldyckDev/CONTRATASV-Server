@@ -11,11 +11,16 @@ const { getUsers,
         postUsers, 
         deleteUsers, 
         putUsers,
-        putProfile  } = require('../controllers/users');
+        putProfile,  
+        getProfile} = require('../controllers/users');
 
 const router = Router();
 
 router.get('/', getUsers);
+
+router.get('/profile', [
+    validateJWT
+],getProfile);
 
 //Crate a new user anyone could do this.
 router.post('/', [

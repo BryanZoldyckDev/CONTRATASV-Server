@@ -6,6 +6,7 @@ const {validProfession, validOfferById} = require('../helpers/db-validators');
 
 const { getOffers, 
         getOfferById, 
+        getOfferByUser,
         postOffers, 
         putOffers, 
         deleteOffers, 
@@ -20,6 +21,13 @@ router.get('/:id', [
     check('id').custom(validOfferById),
     validateFields
 ], getOfferById);
+
+//Get all offers by user
+router.get('/:id', [
+    check('id', `Isn't a valid ID`).isMongoId(),
+    check('id').custom(validOfferById),
+    validateFields
+], getOfferByUser);
 
 //Crate a new offer only contratist could do this.
 router.post('/', [

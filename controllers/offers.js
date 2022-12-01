@@ -27,6 +27,31 @@ const getOffers = async(req = request, res = response) => {
     })
 }
 
+const getOfferByUser = async(req= request, res = response) => {
+    
+    //const {q, nombre = 'No name', page = '1'} = req.query;
+    const {limit = 10, from = 0} = req.query;
+    const query = {contratist: req.user._id};
+
+    // const users = await User.find(query)
+    // .skip(Number(from))
+    // .limit(Number(limit));
+
+    // const total = await User.countDocuments(query);
+
+    const [total, offers] = await Promise.all([
+        Offer.countDocuments(query),
+        Offer.find(query)
+            .skip(Number(from))
+            .limit(Number(limit))
+    ])
+
+    res.status(200).json({
+        total,
+        offers
+    })
+}
+
 const getOfferById = async(req = request, res = response) =>{
     const {id} = req.params;
 
@@ -233,6 +258,7 @@ module.exports = {
     getOffers,
     postOffers,
     getOfferById,
+    getOfferByUser,
     putOffers,
     deleteOffers,
     unarchiveOffers,
