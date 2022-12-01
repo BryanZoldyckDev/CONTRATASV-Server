@@ -1,5 +1,4 @@
-
-const {Profession, Role, User, Offer} = require('../models')
+const {Profession, Role, User, Offer, Request} = require('../models')
 
 //USERS
 const validRole =  async(role = '') => {
@@ -23,6 +22,14 @@ const validOfferById = async( id ) => {
         throw new Error(`Id ${id} doesn't exists in database`)
     }
 }
+
+const validRequestById = async( id ) => {
+    const idExists = await Request.findById(id);
+    if (!idExists){
+        throw new Error(`Id ${id} doesn't exists in database`)
+    }
+}
+
 
 
 const validEmail = async(email) => {
@@ -93,4 +100,5 @@ module.exports = {
     validDUI,
     validUserByDUI,
     validOfferById,
+    validRequestById
 }

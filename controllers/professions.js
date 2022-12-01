@@ -13,9 +13,7 @@ const getProfessions = async(req = request, res = response) => {
             .find(query)
             .skip(Number(from))
             .limit(Number(to))
-            .populate({
-                path: 'user', 
-                select: 'name'})
+            .select('-user')
     ])
 
     res.status(200).json({

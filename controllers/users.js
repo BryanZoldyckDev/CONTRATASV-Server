@@ -112,7 +112,7 @@ const postUsers = async(req, res = response) => {
             let professionsIds = []
             foundProfession.map(prof => {professionsIds.push(prof._id)});
 
-            const user = new User({password: encryptedPassword, role: roleDB._id, profession: professionsIds, dui: duiFormated, phone: phoneFormated, birthdate, ...body});
+            const user = new User({password: encryptedPassword, role: roleDB._id, profession: professionsIds, dui: duiFormated, phone: phoneFormated, birthdate, ...body}).populate({path: 'role', select: 'name -_id'});
 
             //Guardar en DB
             await user.save();
@@ -121,7 +121,7 @@ const postUsers = async(req, res = response) => {
         }
     }
 
-    const user = new User({password: encryptedPassword, role: roleDB._id, dui: duiFormated, phone: phoneFormated, birthdate, ...body});
+    const user = new User({password: encryptedPassword, role: roleDB._id, dui: duiFormated, phone: phoneFormated, birthdate, ...body}).populate({path: 'role', select: 'name -_id'});
 
         //Guardar en DB
     await user.save();
@@ -272,15 +272,15 @@ const putProfile = async(req = request, res = response) => {
 
             body.profession = professionsIds;
 
-            await User.findByIdAndUpdate(id, body, {new:true}).populate({path: 'role', select: 'name -_id'}).populate({path: 'profession', select: 'name -_id'});
+            const user = await User.findByIdAndUpdate(id, body, {new:true}).populate({path: 'role', select: 'name -_id'}).populate({path: 'profession', select: 'name -_id'});
 
-            return res.status(201).json({msg: "Profile succesfully modified"});
+            return res.status(201).json(user);
         }
     }
 
-    await User.findByIdAndUpdate(id, body, {new:true}).populate({path: 'role', select: 'name -_id'}).populate({path: 'profession', select: 'name -_id'});
+    const user = await User.findByIdAndUpdate(id, body, {new:true}).populate({path: 'role', select: 'name -_id'}).populate({path: 'profession', select: 'name -_id'});
 
-    return res.status(201).json({msg: "Profile succesfully modified"});
+    return res.status(201).json(user);
 }
 
 

@@ -14,6 +14,7 @@ class Server {
             auth:           '/api/auth',
             offers:         '/api/offers',
             professions:    '/api/professions',
+            requests:       '/api/requests',
             roles:          '/api/roles',
             search:         '/api/search',
             uploads:        '/api/uploads',
@@ -62,7 +63,7 @@ class Server {
         this.app.use(this.paths.offers,           require('../routes/offers'))
         this.app.use(this.paths.professions,      require('../routes/professions'))
         this.app.use(this.paths.roles,            require('../routes/roles'))
-
+        this.app.use(this.paths.requests,         require('../routes/requests'))
     }
 
     listen() {

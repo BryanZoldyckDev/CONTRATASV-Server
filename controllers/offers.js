@@ -103,7 +103,7 @@ const postOffers = async(req, res = response) => {
     //validar area
     if(!area.toUpperCase().includes("SANTA TECLA") && !area.toUpperCase().includes("SAN SALVADOR")) {
         return res.status(401).json({
-            msg: `The area of the offer needs to be in: SANTA TECLA, SAN SALVADOR}`
+            msg: `The area of the offer needs to be in: SANTA TECLA or in SAN SALVADOR}`
         })
     }
 
@@ -196,7 +196,7 @@ const putOffers = async(req = request, res = response) => {
         //validar area
         if(!area.toUpperCase().includes("SANTA TECLA") && !area.toUpperCase().includes("SAN SALVADOR")) {
             return res.status(401).json({
-                msg: `The area of the offer needs to be in: SANTA TECLA, SAN SALVADOR}`
+                msg: `The area of the offer needs to be in: SANTA TECLA or in SAN SALVADOR}`
             })
         }
 
