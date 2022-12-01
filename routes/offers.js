@@ -16,18 +16,8 @@ const router = Router();
 
 router.get('/', getOffers);
 
-router.get('/:id', [
-    check('id', `Isn't a valid ID`).isMongoId(),
-    check('id').custom(validOfferById),
-    validateFields
-], getOfferById);
-
 //Get all offers by user
-router.get('/:id', [
-    check('id', `Isn't a valid ID`).isMongoId(),
-    check('id').custom(validOfferById),
-    validateFields
-], getOfferByUser);
+router.get('/profile', [validateJWT], getOfferByUser);
 
 //Crate a new offer only contratist could do this.
 router.post('/', [

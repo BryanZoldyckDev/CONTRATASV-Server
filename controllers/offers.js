@@ -1,6 +1,6 @@
 const {response, request} = require('express'); 
 
-const {Profession, Offer} = require('../models/');
+const {Profession, Offer, User} = require('../models/');
 
 const getOffers = async(req = request, res = response) => {
 
@@ -19,6 +19,7 @@ const getOffers = async(req = request, res = response) => {
         Offer.find(query)
             .skip(Number(from))
             .limit(Number(limit))
+            .populate({path: 'contratist', select: 'name -_id, lastname -_id, phone -_id, email -_id'}).populate({path: 'profession', select: 'name -_id'})
     ])
 
     res.status(200).json({
@@ -31,6 +32,7 @@ const getOfferByUser = async(req= request, res = response) => {
     
     //const {q, nombre = 'No name', page = '1'} = req.query;
     const {limit = 10, from = 0} = req.query;
+
     const query = {contratist: req.user._id};
 
     // const users = await User.find(query)
@@ -44,6 +46,7 @@ const getOfferByUser = async(req= request, res = response) => {
         Offer.find(query)
             .skip(Number(from))
             .limit(Number(limit))
+            .populate({path: 'contratist', select: 'name -_id, lastname -_id, phone -_id, email -_id'}).populate({path: 'profession', select: 'name -_id'})
     ])
 
     res.status(200).json({
@@ -55,9 +58,9 @@ const getOfferByUser = async(req= request, res = response) => {
 const getOfferById = async(req = request, res = response) =>{
     const {id} = req.params;
 
-    const offer = await Offer.find(id).populate({path: 'contratist', select: 'name -_id, lastname -_id'}).populate({path: 'profession', select: 'name -_id'});
+    const offer = await Offer.find(id).populate({path: 'contratist', select: 'name -_id, lastname -_id, phone -_id, email -_id'}).populate({path: 'profession', select: 'name -_id'});
 
-    res.status(200).json(offer)
+    res.status(200).json(offer);
 }
 
 
