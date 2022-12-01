@@ -12,6 +12,7 @@ class Server {
         this.port = process.env.PORT;
         this.paths = {
             auth:           '/api/auth',
+            contracts:      '/api/contracts',
             offers:         '/api/offers',
             professions:    '/api/professions',
             requests:       '/api/requests',
@@ -64,6 +65,8 @@ class Server {
         this.app.use(this.paths.professions,      require('../routes/professions'))
         this.app.use(this.paths.roles,            require('../routes/roles'))
         this.app.use(this.paths.requests,         require('../routes/requests'))
+        this.app.use(this.paths.contracts,         require('../routes/contracts'))
+
     }
 
     listen() {

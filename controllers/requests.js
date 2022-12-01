@@ -49,7 +49,7 @@ const getRequests = async(req = request, res = response) => {
     // const total = await User.countDocuments(query);
 
     const [total, requests] = await Promise.all([
-        Request.countDocuments(query),
+        Request.countDocuments(),
         Request.find()
             .skip(Number(from))
             .limit(Number(limit))

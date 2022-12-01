@@ -1,4 +1,4 @@
-const {Profession, Role, User, Offer, Request} = require('../models')
+const {Profession, Role, User, Offer, Request, Contract} = require('../models')
 
 //USERS
 const validRole =  async(role = '') => {
@@ -25,6 +25,13 @@ const validOfferById = async( id ) => {
 
 const validRequestById = async( id ) => {
     const idExists = await Request.findById(id);
+    if (!idExists){
+        throw new Error(`Id ${id} doesn't exists in database`)
+    }
+}
+
+const validContractById = async( id ) => {
+    const idExists = await Contract.findById(id);
     if (!idExists){
         throw new Error(`Id ${id} doesn't exists in database`)
     }
@@ -100,5 +107,6 @@ module.exports = {
     validDUI,
     validUserByDUI,
     validOfferById,
-    validRequestById
+    validRequestById,
+    validContractById
 }

@@ -31,7 +31,7 @@ const hasRole = (...roles) => {
                 msg: 'Role is trying to be validate, without validated the token'
             })
         }
-        
+
         const foundRoles = await Role.find({name: {$in: roles}});
 
         let rolesIds = [];
