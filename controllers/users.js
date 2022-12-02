@@ -112,7 +112,7 @@ const postUsers = async(req, res = response) => {
             let professionsIds = []
             foundProfession.map(prof => {professionsIds.push(prof._id)});
 
-            const user = new User({password: encryptedPassword, role: roleDB._id, profession: professionsIds, dui: duiFormated, phone: phoneFormated, birthdate, ...body}).populate({path: 'role', select: 'name -_id'});
+            const user = new User({password: encryptedPassword, role: roleDB._id, profession: professionsIds, dui: duiFormated, phone: phoneFormated, birthdate, ...body});
 
             //Guardar en DB
             await user.save();
@@ -121,7 +121,7 @@ const postUsers = async(req, res = response) => {
         }
     }
 
-    const user = new User({password: encryptedPassword, role: roleDB._id, dui: duiFormated, phone: phoneFormated, birthdate, ...body}).populate({path: 'role', select: 'name -_id'});
+    const user = new User({password: encryptedPassword, role: roleDB._id, dui: duiFormated, phone: phoneFormated, birthdate, ...body});
 
         //Guardar en DB
     await user.save();
