@@ -40,7 +40,12 @@ class Server {
     middleWares(){
 
         //CORS
-        this.app.use(cors());
+        this.app.use(cors({
+            origin: '*',
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            preflightContinue: false,
+            optionsSuccessStatus: 204
+        }));
 
         //Parseo y lectura del body
         this.app.use(express.json());
@@ -65,6 +70,7 @@ class Server {
         this.app.use(this.paths.professions,      require('../routes/professions'))
         this.app.use(this.paths.roles,            require('../routes/roles'))
         this.app.use(this.paths.requests,         require('../routes/requests'))
+        this.app.use(this.paths.search,             require('../routes/search'))
         this.app.use(this.paths.contracts,         require('../routes/contracts'))
 
     }
